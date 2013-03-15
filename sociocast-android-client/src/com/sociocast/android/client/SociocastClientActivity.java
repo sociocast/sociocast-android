@@ -1,5 +1,6 @@
 package com.sociocast.android.client;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.sociocast.android.Sociocast;
@@ -39,12 +40,13 @@ public class SociocastClientActivity extends ListActivity {
 		String secret = "testclient";
 		
 		// Create instance of Sociocast Android Library
-		this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
+		this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, false);
 		
 		// Create the ResultReceiver
         ResultReceiver receiver = new ResultReceiver(new Handler()) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
+            	loading = false;
                 if (resultData != null && resultData.containsKey(SociocastConstants.REST_RESULT)) {
                     onRESTResult(resultCode, resultData);
                 }
@@ -68,11 +70,17 @@ public class SociocastClientActivity extends ListActivity {
 		this.sociocast.entityObserve(obs);
 		
 		Log.println(Log.INFO, TAG, "Getting Content Profile...");
-		this.sociocast.contentProfile("http://www.cnn.com", true);		
+		this.sociocast.contentProfile("http://www.cnn.com", true);
+		
+		
+		Log.println(Log.INFO, TAG, "Getting Entity Profile...");
+		ArrayList<String> attributes = new ArrayList<String>();
+		attributes.add("cls.ctx");
+		this.sociocast.entityProfile("eid_test_1234", true, attributes);		
 	}
 	
 	private void onRESTResult(int code, Bundle result) {
-		if(loading) mAdapter.clear();
+		if(!loading) mAdapter.remove("Loading...");
 		Log.d(TAG, "Received Result: Code (" + code + ") " + result);
 		if(result != null) {
 			String apiObject = result.getString(SociocastConstants.RESULT_API_OBJECT);

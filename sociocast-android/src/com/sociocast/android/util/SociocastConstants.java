@@ -32,6 +32,11 @@ public class SociocastConstants {
     public static String CONTENT_PROFILE_URL = "/content/profile";
     public static String ENTITY_PROFILE_URL = "/entity/profile";
     public static String ENTITY_ATTRIB_URL = "/entity/attributes";
-    public static String ENTITY_OBSERVE_URL = "/entity/observe";    
+    public static String ENTITY_OBSERVE_URL = "/entity/observe";  
+    
+    public static String JSON_ATTRIBUTES_KEY = "attributes";
+    public static String JSON_ATTRIBUTES_EID = "eid";
+    public static String JSON_ATTRIBUTES_CLID = "clid";
+    public static String JSON_ATTRIBUTES_HUMREAD = "humread";
             
 }

@@ -1,5 +1,7 @@
 package com.sociocast.android;
 
+import java.util.List;
+
 import com.sociocast.android.model.EntityAttributes;
 import com.sociocast.android.model.EntityObservation;
 import com.sociocast.android.util.SociocastException;
@@ -19,7 +21,7 @@ public interface SociocastAPI {
 	/*
 	 * Retrieve an entity profile
 	 */
-	public void entityProfile(String eid);
+	public void entityProfile(String eid, boolean humread, List<String> attributes);
 	
 	/*
 	 * Modify entity attributes

@@ -13,6 +13,9 @@ import java.util.UUID;
 
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -89,6 +92,24 @@ public class SociocastUtils {
         }        
         return "";
     } 
+    
+    public static String attributesListToJSON(String entityId, String clid, boolean humread, List<String> attributes) throws SociocastException {
+    	JSONObject json = new JSONObject();
+    	try {
+    		json.put(SociocastConstants.JSON_ATTRIBUTES_EID, entityId);
+    		json.put(SociocastConstants.JSON_ATTRIBUTES_CLID, clid);
+    		json.put(SociocastConstants.JSON_ATTRIBUTES_HUMREAD, humread);
+    		JSONArray array = new JSONArray();
+    		for(String attribute : attributes) {
+    			array.put(attribute);
+    		}    	    	
+			json.put(SociocastConstants.JSON_ATTRIBUTES_KEY, array);
+		} catch (JSONException e) {
+			throw new SociocastException(e.getMessage());
+		}
+    	return json.toString();
+    	
+    }
     
 	public static String generateAPISignature(long ts, String apikey, String secret) throws SociocastException {
 		try {

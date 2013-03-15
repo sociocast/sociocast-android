@@ -1,10 +1,12 @@
 package com.sociocast.android;
 
 import java.util.Date;
+import java.util.List;
 
 import com.sociocast.android.model.ContentProfile;
 import com.sociocast.android.model.EntityAttributes;
 import com.sociocast.android.model.EntityObservation;
+import com.sociocast.android.model.EntityProfile;
 import com.sociocast.android.service.SociocastService;
 import com.sociocast.android.util.SociocastConstants;
 import com.sociocast.android.util.SociocastException;
@@ -23,10 +25,8 @@ public class Sociocast implements SociocastAPI {
     
     private boolean sandbox;    
     private String apikey;
-    private String secret;
-    
-    @SuppressWarnings("unused")
-	private String clid; //TODO: Do we need this?
+    private String secret;    
+	private String clid;
     
     private Context context;
     private ResultReceiver receiver;
@@ -62,20 +62,16 @@ public class Sociocast implements SociocastAPI {
 		Log.println(Log.INFO, TAG, "Calling sendServiceIntent()..." + this.context + " " + this.receiver);
 		
 		if(this.context != null & this.receiver != null) {
+			
 			Intent intent = new Intent(this.context, SociocastService.class);
-	        intent.setData(url);
-	        
-	        // Here we are going to place our REST call parameters. Note that
-	        // we could have just used Uri.Builder and appendQueryParameter()
-	        // here, but I wanted to illustrate how to use the Bundle params.
-	        
+	        intent.setData(url);	        
 	        intent.putExtra(SociocastConstants.EXTRA_PARAMS, params); //Put the params
 	        intent.putExtra(SociocastConstants.EXTRA_RESULT_RECEIVER, this.receiver); //	        
 	        intent.putExtra(SociocastConstants.EXTRA_HTTP_VERB, type);
 	        intent.putExtra(SociocastConstants.EXTRA_API_OBJECT, apiObject);
-	        //intent.putExtra(SociocastConstants.EXTRA_UUID, getUUID()); //Set UUID for request
 	  	        
 	        Log.d(TAG, "Starting SociocastService...");
+	        
 	        // Here we send our Intent from the activity
 	        context.startService(intent);
 	        	        	        
@@ -101,7 +97,6 @@ public class Sociocast implements SociocastAPI {
         Uri uri = Uri.parse(url);
         Log.d(TAG, "Uri: " + uri.toString());
         						
-		// Generate params Bundle
 		Bundle params = new Bundle();
         params.putString(SociocastConstants.EXTRA_PARAMS_JSON, observation.getJSON());
         params.putLong(SociocastConstants.EXTRA_TIMESTAMP, ts);
@@ -136,8 +131,31 @@ public class Sociocast implements SociocastAPI {
 	}
 		
 	@Override
-	public void entityProfile(String eid) {
-		// TODO Auto-generated method stub
+	public void entityProfile(String eid, boolean humread, List<String> attributes) {
+		Log.d(TAG, "Calling entityProfile()...");
+		
+		String url = SociocastService.getAPIUrl(this.sandbox) + SociocastConstants.ENTITY_PROFILE_URL;
+		long ts = new Date().getTime() / 1000L;
+		
+        try {
+        	url = SociocastUtils.getSignedURL(url, apikey, ts, secret);
+        } catch(SociocastException e) {
+        	Log.e(TAG, e.getMessage());
+        }	
+        
+        Uri uri = Uri.parse(url);
+        Log.d(TAG, "Uri: " + uri.toString());  
+        
+		Bundle params = new Bundle();
+        try {
+			params.putString(SociocastConstants.EXTRA_PARAMS_JSON, SociocastUtils.attributesListToJSON(eid, this.clid, humread, attributes));
+	        params.putLong(SociocastConstants.EXTRA_TIMESTAMP, ts);   
+	        
+	        Log.d(TAG, "Sending Service Intent...");        
+	        sendServiceIntent(uri, params, SociocastUtils.POST, EntityProfile.class.getSimpleName());    		
+		} catch (SociocastException e) {
+			Log.e(TAG, "Error occured in sending entity profile request ", e); 
+		}                   
 	}
 
 	@Override

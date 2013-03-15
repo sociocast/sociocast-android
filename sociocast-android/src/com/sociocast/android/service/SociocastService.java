@@ -268,15 +268,16 @@ public class SociocastService extends IntentService {
             if(receiver != null) receiver.send(0, null);
         }
         catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "A UrlEncodedFormEntity was created with an unsupported encoding.", e);
+            Log.e(TAG, "A UrlEncodedFormEntity was created with an unsupported encoding " + e.getMessage(), e);
             if(receiver != null) receiver.send(0, null);            
         }
         catch (ClientProtocolException e) {
-            Log.e(TAG, "ClientProtocolException - There was a problem when sending the request.", e);
+            Log.e(TAG, "ClientProtocolException - There was a problem when sending the request " + e.getMessage(), e);
             if(receiver != null) receiver.send(0, null);
         }
         catch (IOException e) {
-            Log.e(TAG, "IOException - There was a problem when sending the request.", e);
+            Log.e(TAG, "IOException - There was a problem when sending the request " + e.getMessage(), e);
+            e.printStackTrace();
             if(receiver != null) receiver.send(0, null);        
         }     
         
