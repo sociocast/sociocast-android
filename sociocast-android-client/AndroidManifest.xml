@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sociocast.android.client"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    <!-- ADDED FOR SOCIOCAST LIBRARY USE -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <!-- START: ADDED FOR SOCIOCAST LIBRARY USE -->
+        <service android:name="com.sociocast.android.service.SociocastService" />  
+        <provider android:authorities="com.sociocast.android.provider.events" android:name="com.sociocast.android.content_provider.QueuedEventContentProvider"/>    	
+    	<receiver android:name="com.sociocast.android.receiver.ConnectivityChangedReceiver" enabled="false">
+      		<intent-filter>
+        		<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        		<action android:name="com.sociocast.android.retry_queued_items" />
+      		</intent-filter>
+    	</receiver>        
+        <!-- START: ADDED FOR SOCIOCAST LIBRARY USE -->
+        
+        <activity
+            android:name="com.sociocast.android.client.SociocastClientActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+                      
+    </application>
+
+</manifest>
