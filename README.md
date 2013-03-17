@@ -113,9 +113,9 @@ To access the JSON response object from the methods above, you can grab the resu
 
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         String json = resultData.getString(SociocastConstants.REST_RESULT);    
-        // Parse JSON
+        // Parse JSON with JSONObject(json) throws JSONException
     }
     
-
+You can parse the JSON response string using `JSONObject(String json) throws JSONException`. 
 
 
