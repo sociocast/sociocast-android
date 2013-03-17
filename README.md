@@ -42,8 +42,34 @@ You can find usage examples in the [Sociocast Android Library](https://github.co
     
 Make sure to pass in your `apikey`, `secret`, `clid` (Client ID), and whether to use Sandbox (true) or Production (false).
 
+You must also set a `Receiver` that the library will use to return any response results. For instance:
+
+    // Create the ResultReceiver
+    ResultReceiver receiver = new ResultReceiver(new Handler()) {
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            loading = false;
+            if (resultData != null && resultData.containsKey(SociocastConstants.REST_RESULT)) {
+                onRESTResult(resultCode, resultData);
+            }
+            else {
+                onRESTResult(resultCode, null);
+            }
+        }            
+    };
+        
+    sociocast.setReceiver(receiver);
+
 ##Usage
 To send and retrieve data from Sociocast using the Sociocast Android Library you can now use the `Sociocast` object. The `Sociocast` class implements the `SociocastAPI` interface which defines the basic Sociocast REST API methods.
 
 ###`sociocast.entityObserve`
+The `sociocast.entityObserve` calls wraps the `entity/observe` Sociocast API REST call. To submit a `sociocast.entityObserve` call, you must create an `EntityObservation` object. For instance:
+
+    EntityObservation obs = new EntityObservation();
+    obs.setEid(eid);
+    obs.setEvt("view");
+    obs.setAttribute("url","http://www.sociocast.com");	
+    obs.setClid(clid);
+    obs.setTimestamp(new Date()); 
 
