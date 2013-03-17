@@ -106,6 +106,35 @@ public class Sociocast implements SociocastAPI {
 	}
 	
 	@Override
+	public void entityAttributes(EntityAttributes attributes) {
+		
+		Log.d(TAG, "Calling entityAttributes()...");
+		
+		String url = SociocastService.getAPIUrl(this.sandbox) + SociocastConstants.ENTITY_ATTRIB_URL;
+		long ts = new Date().getTime() / 1000L;
+		
+        try {
+        	url = SociocastUtils.getSignedURL(url, apikey, ts, secret);
+        } catch(SociocastException e) {
+        	Log.e(TAG, e.getMessage());
+        }		
+        
+        Uri uri = Uri.parse(url);
+        Log.d(TAG, "Uri: " + uri.toString());        
+				
+		Bundle params = new Bundle();
+        try {
+			params.putString(SociocastConstants.EXTRA_PARAMS_JSON, attributes.getJSON());	
+			params.putLong(SociocastConstants.EXTRA_TIMESTAMP, ts);	
+	        Log.d(TAG, "Sending Service Intent...");        
+	        sendServiceIntent(uri, params, SociocastUtils.POST, EntityAttributes.class.getSimpleName());     			
+		} catch (SociocastException e) {
+			e.printStackTrace();
+		}
+        
+	}	
+	
+	@Override
 	public void contentProfile(String urlClassified, boolean humread) {
 		
 		Log.d(TAG, "Calling contentProfile()...");
@@ -156,11 +185,6 @@ public class Sociocast implements SociocastAPI {
 		} catch (SociocastException e) {
 			Log.e(TAG, "Error occured in sending entity profile request ", e); 
 		}                   
-	}
-
-	@Override
-	public void entityAttributes(EntityAttributes attributes) {
-		// TODO Auto-generated method stub		
 	}
 	
 }

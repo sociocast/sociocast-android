@@ -21,7 +21,7 @@ public class QueuedEventContentProvider extends ContentProvider {
 	public static final String TAG = QueuedEventContentProvider.class.getName();
 	
 	private static final String DATABASE_NAME = "events.db";
-	private static final int DATABASE_VERSION = 5;	
+	private static final int DATABASE_VERSION = 6;	
 	public static final String KEY_ID = "id";
 	public static final String KEY_TIME_STAMP = "timestamp";	
 	public static final String KEY_JSON = "json";		
