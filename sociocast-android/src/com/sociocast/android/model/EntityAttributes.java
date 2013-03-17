@@ -29,7 +29,7 @@ public class EntityAttributes {
 	/*
 	 * Map to maintain the attributes to be set, delete, added
 	 */
-	public Map<String, Map<String, Object>> setMap = 
+	private Map<String, Map<String, Object>> setMap = 
 			new HashMap<String, Map<String,Object>>();
 	
 

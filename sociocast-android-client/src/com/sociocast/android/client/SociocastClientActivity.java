@@ -87,7 +87,9 @@ public class SociocastClientActivity extends ListActivity {
 		entityAttribs.setClid(clid);
 		Map<String, Object> setAttribs = new HashMap<String, Object>();
 		setAttribs.put("user_age", "18 - 39");
-		entityAttribs.setMap.put(EntityAttributes.ATTRIB_DELETE, setAttribs);
+		entityAttribs.setAttributes(setAttribs);
+		entityAttribs.addAttributes(setAttribs);
+		entityAttribs.deleteAttributes(setAttribs);
 		this.sociocast.entityAttributes(entityAttribs);
 				
 	}
