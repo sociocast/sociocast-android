@@ -29,13 +29,17 @@ Additionally, the following application components are required as well within t
 
 For more information on the AndroidManifest.xml file see [this link](http://developer.android.com/guide/topics/manifest/manifest-intro.html). Additionally, you will find a sample Sociocast Android Library client [here](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client).
 
-##Usage 
+##Initialization 
 
 You can find usage examples in the [Sociocast Android Library](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client). To initialize the Sociocast Android Library, from your app, you can use the following command:
 
     // Create instance of Sociocast Android Library    
-    this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
+    Sociocast sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
     
 Make sure to pass in your `apikey`, `secret`, `clid` (Client ID), and whether to use Sandbox (true) or Production (false).
 
+##Usage
+To send and retrieve data from Sociocast using the Sociocast Android Library you can now use the `Sociocast` object. The `Sociocast` class implements the `SociocastAPI` interface which defines the basic Sociocast REST API methods.
+
+###sociocast.entityObserve
 
