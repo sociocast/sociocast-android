@@ -2,8 +2,11 @@ package com.sociocast.android.client;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.sociocast.android.Sociocast;
+import com.sociocast.android.model.EntityAttributes;
 import com.sociocast.android.model.EntityObservation;
 import com.sociocast.android.util.SociocastConstants;
 
@@ -35,12 +38,13 @@ public class SociocastClientActivity extends ListActivity {
 		
 		mAdapter.add("Loading...");
 		                
-		String clid = "c85";
-		String apikey = "testclient";
-		String secret = "testclient";
+		String clid = "c85"; // Your client id
+		String apikey = "testclient"; // Your api key
+		String secret = "testclient"; // Your api secret
+		String eid = "eid_test_1234"; // The entity id
 		
 		// Create instance of Sociocast Android Library
-		this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, false);
+		this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
 		
 		// Create the ResultReceiver
         ResultReceiver receiver = new ResultReceiver(new Handler()) {
@@ -60,7 +64,7 @@ public class SociocastClientActivity extends ListActivity {
         
 		Log.println(Log.INFO, TAG, "Loading testEntityObservation");
 		EntityObservation obs = new EntityObservation();
-		obs.setEid("eid_test_1234");
+		obs.setEid(eid);
 		obs.setEvt("view");
 		obs.setAttribute("url","http://www.sociocast.com");	
 		obs.setClid(clid);
@@ -71,12 +75,21 @@ public class SociocastClientActivity extends ListActivity {
 		
 		Log.println(Log.INFO, TAG, "Getting Content Profile...");
 		this.sociocast.contentProfile("http://www.cnn.com", true);
-		
-		
+				
 		Log.println(Log.INFO, TAG, "Getting Entity Profile...");
 		ArrayList<String> attributes = new ArrayList<String>();
 		attributes.add("cls.ctx");
-		this.sociocast.entityProfile("eid_test_1234", true, attributes);		
+		this.sociocast.entityProfile(eid, true, attributes);
+		
+		Log.println(Log.INFO, TAG, "Setting/Adding/Deleting Entity Properties...");
+		EntityAttributes entityAttribs = new EntityAttributes();
+		entityAttribs.setEid(eid);
+		entityAttribs.setClid(clid);
+		Map<String, Object> setAttribs = new HashMap<String, Object>();
+		setAttribs.put("user_age", "18 - 39");
+		entityAttribs.setMap.put(EntityAttributes.ATTRIB_DELETE, setAttribs);
+		this.sociocast.entityAttributes(entityAttribs);
+				
 	}
 	
 	private void onRESTResult(int code, Bundle result) {
