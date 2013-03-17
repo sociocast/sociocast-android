@@ -27,7 +27,7 @@
         		<action android:name="com.sociocast.android.retry_queued_items" />
       		</intent-filter>
     	</receiver>        
-        <!-- START: ADDED FOR SOCIOCAST LIBRARY USE -->
+        <!-- END: ADDED FOR SOCIOCAST LIBRARY USE -->
         
         <activity
             android:name="com.sociocast.android.client.SociocastClientActivity"
