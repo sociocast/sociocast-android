@@ -31,6 +31,11 @@ For more information on the AndroidManifest.xml file see [this link](http://deve
 
 ##Usage 
 
-You can find usage examples in the [Sociocast Android Library](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client). 
+You can find usage examples in the [Sociocast Android Library](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client). To initialize the Sociocast Android Library, from your app, you can use the following command:
+
+    // Create instance of Sociocast Android Library    
+    this.sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
+    
+Make sure to pass in your `apikey`, `secret`, `clid` (Client ID), and whether to use Sandbox (true) or Production (false).
 
 
