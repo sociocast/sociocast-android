@@ -1,3 +1,5 @@
+![Alt text](/images/logo.png)
+
 #Sociocast Android Library
 
 ##Overview
@@ -26,3 +28,5 @@ Additionally, the following application components are required as well within t
     <!-- END: ADDED FOR SOCIOCAST LIBRARY USE -->
 
 For more information on the AndroidManifest.xml file see [this link](http://developer.android.com/guide/topics/manifest/manifest-intro.html). Additionally, you will find a sample Sociocast Android Library client [here](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client).
+
+
