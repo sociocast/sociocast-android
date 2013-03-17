@@ -72,4 +72,10 @@ The `sociocast.entityObserve` calls wraps the `entity/observe` Sociocast API RES
     obs.setAttribute("url","http://www.sociocast.com");	
     obs.setClid(clid);
     obs.setTimestamp(new Date()); 
+    
+You can then submit the `sociocast.entityObserve` call:
+
+    sociocast.entityObserve(obs);
+    
+
 
