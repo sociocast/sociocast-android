@@ -64,7 +64,7 @@ You must also set a `Receiver` that the library will use to return any response 
 To send and retrieve data from Sociocast using the Sociocast Android Library you can now use the `Sociocast` object. The `Sociocast` class implements the `SociocastAPI` interface which defines the basic Sociocast REST API methods.
 
 ###`sociocast.entityObserve`
-The `sociocast.entityObserve` calls wraps the `entity/observe` Sociocast API REST call. To submit a `sociocast.entityObserve` call, you must create an `EntityObservation` object. For instance:
+The `sociocast.entityObserve` method wraps the `/entity/observe` Sociocast REST API call. To submit a `sociocast.entityObserve` call, you must create an `EntityObservation` object. For instance:
 
     EntityObservation obs = new EntityObservation();
     obs.setEid(eid);
@@ -77,5 +77,25 @@ You can then submit the `sociocast.entityObserve` call:
 
     sociocast.entityObserve(obs);
     
+###`sociocast.entityAttributes`
+The `sociocast.entityAttributes` method wraps the `/entity/attributes` Sociocast REST API call. It is used to set, add, and delete entity attributes. You must submit a `EntityAttributes` object. For instance:
+
+    EntityAttributes entityAttribs = new EntityAttributes();
+    entityAttribs.setEid(eid);
+    entityAttribs.setClid(clid);
+    Map<String, Object> setAttribs = new HashMap<String, Object>();
+    setAttribs.put("user_age", "18 - 39");
+    // Set Attributes
+    entityAttribs.setAttributes(setAttribs);
+    // Add Attributes
+    entityAttribs.addAttributes(setAttribs);
+    // Delete Attributes
+    entityAttribs.deleteAttributes(setAttribs);
+
+You can then submit the `sociocast.entityAttributes` call:
+
+    sociocast.entityAttributes(entityAttribs);
+    
+
 
 
