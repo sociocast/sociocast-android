@@ -6,7 +6,7 @@
 
 The Sociocast Android Library provides Adroid developers with wrapper functionality for Sociocast REST API methods. The Library provides basic HTTP request/response functionality as well as the general queueing of entity observations when the device does not have network connectivity. Entity Observations are stored in a SQL Lite database, wrapped by a [Content Provider](http://developer.android.com/guide/topics/providers/content-providers.html) class.   
 
-The library utilizes the Android `IntentService` class which handles asynchronous requests (`Intent`) on demand. `IntentService` Clients send requests through `startService(Intent)` calls; the service is started as needed, handles each Intent in turn using a worker thread, and stops itself when it runs out of work. 
+The library utilizes the Android [`IntentService`](http://developer.android.com/reference/android/app/IntentService.html) class which handles asynchronous requests (`Intent`) on demand. `IntentService` Clients send requests through `startService(Intent)` calls; the service is started as needed, handles each Intent in turn using a worker thread, and stops itself when it runs out of work. 
 
 Additionally, the library use its `QueuedEventContentProvider` to provide a locally stored queue for entity observations when there is no network connectivity. This class is backed by a [`SQLiteDatabase`](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html). 
 
