@@ -19,6 +19,29 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+/**
+ * Core class for interacting with the Sociocast API. 
+ *
+ * <p>Call {@link #newInstance(Context context, String apikey, String secret, String clid, boolean sandbox)} with
+ * your main application activity and your Sociocast apikey, secret, client id. Additionally @param sandbox should be
+ * set to true when testing and false when you want to push data to the live environment. 
+ *
+ * <p>Once you have an instance, you can call general Sociocast API methods. 
+ *
+ * <p>The Sociocast library will periodically send information to
+ * Sociocast servers, so your application will need to have
+ * <tt>android.permission.INTERNET</tt>.  
+ *
+ * <p>A typical use-case for the library might look like this:
+ *
+ * <p>In addition to this documentation, you may wish to take a look at
+ * <a href="https://github.com/sociocast/">for additional information.</a>.
+ *
+ * <p>There is also <a href="http://www.sociocast.com/">general documentation</a>
+ * available at sociocast.com
+ *
+ * @see <a href="https://sociocast.com">getting started documentation for the Sociocast platform</a>
+ */
 public class Sociocast implements SociocastAPI {
 
 	public static final String TAG = Sociocast.class.getName();
