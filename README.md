@@ -96,6 +96,26 @@ You can then submit the `sociocast.entityAttributes` call:
 
     sociocast.entityAttributes(entityAttribs);
     
+###`sociocast.contentProfile`
+The `sociocast.contentProfile` wraps the `/content/profile` Sociocast REST API call. It is used to retrieve a content classification, once the content has been classified by the Sociocast platform. To use the method pass in a `url` as a `String` value and `humread` as a `boolean` value. When `humread` is set to `true`, Sociocast will return human readable classifications using the Sociocast Taxonomy (as oppose to internal content IDs). For instance:
+
+    this.sociocast.contentProfile("http://www.cnn.com", true);
+    
+###`sociocast.entityProfile`
+The `sociocast.entityProfile` wraps the `/entity/profile` Sociocast REST API call. It is used to retrive a profile for an entity. To use the method you must pass in the `eid` (entity ID) as a `String` value, `humread` as a `boolean` value, and the set of `attributes` to return as a `List<String>`. For instance:
+
+    ArrayList<String> attributes = new ArrayList<String>();
+    attributes.add("cls.ctx");
+    this.sociocast.entityProfile(eid, true, attributes);
+    
+##Accessing the JSON Response
+To access the JSON response object from the methods above, you can grab the result `Bundle` from the `Handler` and request the String `SociocastConstants.REST_RESULT`. For instance:
+
+    protected void onReceiveResult(int resultCode, Bundle resultData) {
+        String json = resultData.getString(SociocastConstants.REST_RESULT);    
+        // Parse JSON
+    }
+    
 
 
 
