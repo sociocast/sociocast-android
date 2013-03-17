@@ -4,7 +4,7 @@
 
 ##Overview
 
-The Sociocast Android Library provides Adroid developers with wrapper functionality for Sociocast REST API methods. The Library provides basic HTTP request/response functionality as well as general queueing of entity observations when the device does not have network connectivity. Entity Observations are stored in a SQL Lite database, wrapped by a [Content Provider](http://developer.android.com/guide/topics/providers/content-providers.html) class.   
+The Sociocast Android Library provides Adroid developers with wrapper functionality for Sociocast REST API methods. The Library provides basic HTTP request/response functionality as well as the general queueing of entity observations when the device does not have network connectivity. Entity Observations are stored in a SQL Lite database, wrapped by a [Content Provider](http://developer.android.com/guide/topics/providers/content-providers.html) class.   
 
 ##Installation
 
@@ -28,5 +28,9 @@ Additionally, the following application components are required as well within t
     <!-- END: ADDED FOR SOCIOCAST LIBRARY USE -->
 
 For more information on the AndroidManifest.xml file see [this link](http://developer.android.com/guide/topics/manifest/manifest-intro.html). Additionally, you will find a sample Sociocast Android Library client [here](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client).
+
+##Usage 
+
+You can find usage examples in the [Sociocast Android Library](https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client). 
 
 
