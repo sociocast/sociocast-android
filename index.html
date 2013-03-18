@@ -55,9 +55,9 @@
       </header>
       <section>
 
-<h1>Sociocast Android Library</h1>
+<h2>Sociocast Android Library</h2>
 
-<h2>Overview</h2>
+<h3>Overview</h3>
 
 <p>The Sociocast Android Library provides Adroid developers with wrapper functionality for Sociocast REST API methods. The Library provides basic HTTP request/response functionality as well as the general queueing of entity observations when the device does not have network connectivity. Entity Observations are stored in a SQL Lite database, wrapped by a <a href="http://developer.android.com/guide/topics/providers/content-providers.html">Content Provider</a> class.   </p>
 
@@ -65,7 +65,7 @@
 
 <p>Additionally, the library use its <code>QueuedEventContentProvider</code> to provide a locally stored queue for entity observations when there is no network connectivity. This class is backed by a <a href="http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html"><code>SQLiteDatabase</code></a>. </p>
 
-<h2>Installation</h2>
+<h3>Installation</h3>
 
 <p>To install the Sociocast Android Library, download and place the <code>sociocast-android.jar</code> (located in the <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android/bin">/bin/</a> directory) into your project's classpath. Also make sure that the <code>AndroidManifest.xml</code> file for your application contains the following permissions within the <code>manifest</code> tag:</p>
 
@@ -90,7 +90,7 @@
 
 <p>For more information on the AndroidManifest.xml file see <a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html">this link</a>. Additionally, you will find a sample Sociocast Android Library client <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client">here</a>.</p>
 
-<h2>Initialization</h2>
+<h3>Initialization</h3>
 
 <p>You can find usage examples in the <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client">Sociocast Android Library</a>. To initialize the Sociocast Android Library, from your app, you can use the following command:</p>
 
@@ -178,7 +178,7 @@ attributes.add("cls.ctx");
 this.sociocast.entityProfile(eid, true, attributes);
 </code></pre>
 
-<h2>Accessing the JSON Response</h2>
+<h3>Accessing the JSON Response</h3>
 
 <p>To access the JSON response object from the methods above, you can grab the result <code>Bundle</code> from the <code>Handler</code> and request the String <code>SociocastConstants.REST_RESULT</code>. For instance:</p>
 
@@ -189,6 +189,9 @@ this.sociocast.entityProfile(eid, true, attributes);
 </code></pre>
 
 <p>You can parse the JSON response string using <code>JSONObject(String json) throws JSONException</code>. </p>
+<h3>Support or Contact</h3>
+
+<p>Having trouble with Sociocast REST API? Contact <a href="mailto:support@sociocast.com">support@sociocast.com</a> and we’ll help you sort it out.</p>
       </section>
       <footer>
       <!--
