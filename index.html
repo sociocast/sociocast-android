@@ -123,7 +123,7 @@ sociocast.setReceiver(receiver);
 
 <p>To send and retrieve data from Sociocast using the Sociocast Android Library you can now use the <code>Sociocast</code> object. The <code>Sociocast</code> class implements the <code>SociocastAPI</code> interface which defines the basic Sociocast REST API methods.</p>
 
-<h3><code>sociocast.entityObserve</code></h3>
+<h4><code>sociocast.entityObserve</code></h4>
 
 <p>The <code>sociocast.entityObserve</code> method wraps the <code>/entity/observe</code> Sociocast REST API call. To submit a <code>sociocast.entityObserve</code> call, you must create an <code>EntityObservation</code> object. For instance:</p>
 
@@ -140,7 +140,7 @@ obs.setTimestamp(new Date());
 <pre><code>sociocast.entityObserve(obs);
 </code></pre>
 
-<h3><code>sociocast.entityAttributes</code></h3>
+<h4><code>sociocast.entityAttributes</code></h4>
 
 <p>The <code>sociocast.entityAttributes</code> method wraps the <code>/entity/attributes</code> Sociocast REST API call. It is used to set, add, and delete entity attributes. You must submit a <code>EntityAttributes</code> object. For instance:</p>
 
@@ -162,14 +162,14 @@ entityAttribs.deleteAttributes(setAttribs);
 <pre><code>sociocast.entityAttributes(entityAttribs);
 </code></pre>
 
-<h3><code>sociocast.contentProfile</code></h3>
+<h4><code>sociocast.contentProfile</code></h4>
 
 <p>The <code>sociocast.contentProfile</code> wraps the <code>/content/profile</code> Sociocast REST API call. It is used to retrieve a content classification, once the content has been classified by the Sociocast platform. To use the method pass in a <code>url</code> as a <code>String</code> value and <code>humread</code> as a <code>boolean</code> value. When <code>humread</code> is set to <code>true</code>, Sociocast will return human readable classifications using the Sociocast Taxonomy (as oppose to internal content IDs). For instance:</p>
 
 <pre><code>this.sociocast.contentProfile("http://www.cnn.com", true);
 </code></pre>
 
-<h3><code>sociocast.entityProfile</code></h3>
+<h4><code>sociocast.entityProfile</code></h4>
 
 <p>The <code>sociocast.entityProfile</code> wraps the <code>/entity/profile</code> Sociocast REST API call. It is used to retrive a profile for an entity. To use the method you must pass in the <code>eid</code> (entity ID) as a <code>String</code> value, <code>humread</code> as a <code>boolean</code> value, and the set of <code>attributes</code> to return as a <code>List&lt;String&gt;</code>. For instance:</p>
 
