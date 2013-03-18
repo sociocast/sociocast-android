@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sociocast-android by sociocast</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Sociocast-android</h1>
+        <p>Sociocast Android Library</p>
+
+        <p class="view"><a href="https://github.com/sociocast/sociocast-android">View the Project on GitHub <small>sociocast/sociocast-android</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/sociocast/sociocast-android/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sociocast/sociocast-android/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sociocast/sociocast-android">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><img src="/images/logo.png" alt="Alt text"></p>
+
+<h1>Sociocast Android Library</h1>
+
+<h2>Overview</h2>
+
+<p>The Sociocast Android Library provides Adroid developers with wrapper functionality for Sociocast REST API methods. The Library provides basic HTTP request/response functionality as well as the general queueing of entity observations when the device does not have network connectivity. Entity Observations are stored in a SQL Lite database, wrapped by a <a href="http://developer.android.com/guide/topics/providers/content-providers.html">Content Provider</a> class.   </p>
+
+<p>The library utilizes the Android <a href="http://developer.android.com/reference/android/app/IntentService.html"><code>IntentService</code></a> class which handles asynchronous requests (<code>Intent</code>) on demand. <code>IntentService</code> Clients send requests through <code>startService(Intent)</code> calls; the service is started as needed, handles each Intent in turn using a worker thread, and stops itself when it runs out of work. </p>
+
+<p>Additionally, the library use its <code>QueuedEventContentProvider</code> to provide a locally stored queue for entity observations when there is no network connectivity. This class is backed by a <a href="http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html"><code>SQLiteDatabase</code></a>. </p>
+
+<h2>Installation</h2>
+
+<p>To install the Sociocast Android Library, download and place the <code>sociocast-android.jar</code> (located in the <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android/bin">/bin/</a> directory) into your project's classpath. Also make sure that the <code>AndroidManifest.xml</code> file for your application contains the following permissions within the <code>manifest</code> tag:</p>
+
+<pre><code>&lt;!-- ADDED FOR SOCIOCAST LIBRARY USE --&gt;
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+</code></pre>
+
+<p>Additionally, the following application components are required as well within the <code>application</code> tag:</p>
+
+<pre><code>&lt;!-- START: ADDED FOR SOCIOCAST LIBRARY USE --&gt;
+&lt;service android:name="com.sociocast.android.service.SociocastService" /&gt;  
+&lt;provider android:authorities="com.sociocast.android.provider.events" android:name="com.sociocast.android.content_provider.QueuedEventContentProvider"/&gt;      
+&lt;receiver android:name="com.sociocast.android.receiver.ConnectivityChangedReceiver" enabled="false"&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name="android.net.conn.CONNECTIVITY_CHANGE" /&gt;
+        &lt;action android:name="com.sociocast.android.retry_queued_items" /&gt;
+    &lt;/intent-filter&gt;
+&lt;/receiver&gt;        
+&lt;!-- END: ADDED FOR SOCIOCAST LIBRARY USE --&gt;
+</code></pre>
+
+<p>For more information on the AndroidManifest.xml file see <a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html">this link</a>. Additionally, you will find a sample Sociocast Android Library client <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client">here</a>.</p>
+
+<h2>Initialization</h2>
+
+<p>You can find usage examples in the <a href="https://github.com/sociocast/sociocast-android/tree/master/sociocast-android-client">Sociocast Android Library</a>. To initialize the Sociocast Android Library, from your app, you can use the following command:</p>
+
+<pre><code>// Create instance of Sociocast Android Library    
+Sociocast sociocast = Sociocast.newInstance(this, apikey, secret, clid, true);
+</code></pre>
+
+<p>Make sure to pass in your <code>apikey</code>, <code>secret</code>, <code>clid</code> (Client ID), and whether to use Sandbox (true) or Production (false).</p>
+
+<p>You must also set a <code>Receiver</code> that the library will use to return any response results. For instance:</p>
+
+<pre><code>// Create the ResultReceiver
+ResultReceiver receiver = new ResultReceiver(new Handler()) {
+    @Override
+    protected void onReceiveResult(int resultCode, Bundle resultData) {
+        loading = false;
+        if (resultData != null &amp;&amp; resultData.containsKey(SociocastConstants.REST_RESULT)) {
+            onRESTResult(resultCode, resultData);
+        }
+        else {
+            onRESTResult(resultCode, null);
+        }
+    }            
+};
+
+sociocast.setReceiver(receiver);
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>To send and retrieve data from Sociocast using the Sociocast Android Library you can now use the <code>Sociocast</code> object. The <code>Sociocast</code> class implements the <code>SociocastAPI</code> interface which defines the basic Sociocast REST API methods.</p>
+
+<h3><code>sociocast.entityObserve</code></h3>
+
+<p>The <code>sociocast.entityObserve</code> method wraps the <code>/entity/observe</code> Sociocast REST API call. To submit a <code>sociocast.entityObserve</code> call, you must create an <code>EntityObservation</code> object. For instance:</p>
+
+<pre><code>EntityObservation obs = new EntityObservation();
+obs.setEid(eid);
+obs.setEvt("view");
+obs.setAttribute("url","http://www.sociocast.com"); 
+obs.setClid(clid);
+obs.setTimestamp(new Date()); 
+</code></pre>
+
+<p>You can then submit the <code>sociocast.entityObserve</code> call:</p>
+
+<pre><code>sociocast.entityObserve(obs);
+</code></pre>
+
+<h3><code>sociocast.entityAttributes</code></h3>
+
+<p>The <code>sociocast.entityAttributes</code> method wraps the <code>/entity/attributes</code> Sociocast REST API call. It is used to set, add, and delete entity attributes. You must submit a <code>EntityAttributes</code> object. For instance:</p>
+
+<pre><code>EntityAttributes entityAttribs = new EntityAttributes();
+entityAttribs.setEid(eid);
+entityAttribs.setClid(clid);
+Map&lt;String, Object&gt; setAttribs = new HashMap&lt;String, Object&gt;();
+setAttribs.put("user_age", "18 - 39");
+// Set Attributes
+entityAttribs.setAttributes(setAttribs);
+// Add Attributes
+entityAttribs.addAttributes(setAttribs);
+// Delete Attributes
+entityAttribs.deleteAttributes(setAttribs);
+</code></pre>
+
+<p>You can then submit the <code>sociocast.entityAttributes</code> call:</p>
+
+<pre><code>sociocast.entityAttributes(entityAttribs);
+</code></pre>
+
+<h3><code>sociocast.contentProfile</code></h3>
+
+<p>The <code>sociocast.contentProfile</code> wraps the <code>/content/profile</code> Sociocast REST API call. It is used to retrieve a content classification, once the content has been classified by the Sociocast platform. To use the method pass in a <code>url</code> as a <code>String</code> value and <code>humread</code> as a <code>boolean</code> value. When <code>humread</code> is set to <code>true</code>, Sociocast will return human readable classifications using the Sociocast Taxonomy (as oppose to internal content IDs). For instance:</p>
+
+<pre><code>this.sociocast.contentProfile("http://www.cnn.com", true);
+</code></pre>
+
+<h3><code>sociocast.entityProfile</code></h3>
+
+<p>The <code>sociocast.entityProfile</code> wraps the <code>/entity/profile</code> Sociocast REST API call. It is used to retrive a profile for an entity. To use the method you must pass in the <code>eid</code> (entity ID) as a <code>String</code> value, <code>humread</code> as a <code>boolean</code> value, and the set of <code>attributes</code> to return as a <code>List&lt;String&gt;</code>. For instance:</p>
+
+<pre><code>ArrayList&lt;String&gt; attributes = new ArrayList&lt;String&gt;();
+attributes.add("cls.ctx");
+this.sociocast.entityProfile(eid, true, attributes);
+</code></pre>
+
+<h2>Accessing the JSON Response</h2>
+
+<p>To access the JSON response object from the methods above, you can grab the result <code>Bundle</code> from the <code>Handler</code> and request the String <code>SociocastConstants.REST_RESULT</code>. For instance:</p>
+
+<pre><code>protected void onReceiveResult(int resultCode, Bundle resultData) {
+    String json = resultData.getString(SociocastConstants.REST_RESULT);    
+    // Parse JSON with JSONObject(json) throws JSONException
+}
+</code></pre>
+
+<p>You can parse the JSON response string using <code>JSONObject(String json) throws JSONException</code>. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sociocast">sociocast</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
